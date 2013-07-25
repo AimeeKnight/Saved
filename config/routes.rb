@@ -1,6 +1,8 @@
 Saved::Application.routes.draw do
-  resources :testimonies
+  devise_for :users
 
+  resources :testimonies
+  root :to => "testimonies#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
