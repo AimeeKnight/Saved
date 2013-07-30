@@ -1,4 +1,5 @@
 class TestimoniesController < ApplicationController
+  before_filter :authenticate_user!, only: [:new, :create, :edit, :update]
   # GET /testimonies
   # GET /testimonies.json
   def index
