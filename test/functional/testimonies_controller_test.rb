@@ -24,7 +24,7 @@ class TestimoniesControllerTest < ActionController::TestCase
   end
 
   test "should be logged in to post a testimony" do
-    post :create, testimony: { contant: "Hello" }
+    post :create, testimony: { content: "Hello" }
     assert_response :redirect
     assert_redirected_to new_user_session_path
   end
@@ -47,6 +47,12 @@ class TestimoniesControllerTest < ActionController::TestCase
     sign_in users(:aimee)
     get :edit, id: @testimony
     assert_response :success
+  end
+
+  test "should redirect testimony update when not logged in" do
+    put :update, id: @testimony, testimony: { content: @testimony.content }
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
   end
 
   test "should update testimony when logged in" do
