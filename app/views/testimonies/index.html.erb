@@ -4,14 +4,21 @@
 
 <% @testimonies.each do |testimony| %>
 <div class="testimony">
-  <strong><%= testimony.user.full_name %></strong>
-  <p><%= testimony.content %></p>
-  <div class="meta">
-    <%= link_to time_ago_in_words(testimony.created_at) + " ago", testimony %>
-    <span class="admin">
-    | <%= link_to "Edit", edit_testimony_path(testimony) %> |
-    <%= link_to "Delete", testimony, method: :delete, data: { confirm: "Are you sure you'd like to delete this testimony?" }  %>
-    </span>
+  <div class="row">
+    <div class="span1">
+      <%= image_tag testimony.user.gravatar_url %>
+    </div>
+    <div class="span7">
+      <strong><%= testimony.user.full_name %></strong>
+      <p><%= testimony.content %></p>
+      <div class="meta">
+        <%= link_to time_ago_in_words(testimony.created_at) + " ago", testimony %>
+        <span class="admin">
+        | <%= link_to "Edit", edit_testimony_path(testimony) %> |
+        <%= link_to "Delete", testimony, method: :delete, data: { confirm: "Are you sure you'd like to delete this testimony?" }  %>
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 <br>
