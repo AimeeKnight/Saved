@@ -13,6 +13,8 @@ Saved::Application.routes.draw do
   get 'feed', to: 'testimonies#index', as: :feed
   root :to => "testimonies#index"
 
+  get '/:id', to: 'profiles#show'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
