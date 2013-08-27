@@ -38,6 +38,16 @@ class TestimoniesControllerTest < ActionController::TestCase
     assert_redirected_to testimony_path(assigns(:testimony))
   end
 
+  test "should create testimony for current user when logged in" do
+    sign_in users(:aimee)
+    assert_difference('Testimony.count') do
+      post :create, testimony: { content: @testimony.content, user_id: users(:jay).id }
+    end
+
+    assert_redirected_to testimony_path(assigns(:testimony))
+    assert_equal assigns(:testimony).user_id, users(:aimee).id
+  end
+
   test "should show testimony" do
     get :show, id: @testimony
     assert_response :success
@@ -59,6 +69,20 @@ class TestimoniesControllerTest < ActionController::TestCase
     sign_in users(:aimee)
     put :update, id: @testimony, testimony: { content: @testimony.content }
     assert_redirected_to testimony_path(assigns(:testimony))
+  end
+
+  test "should update testimony for current user when logged in" do
+    sign_in users(:aimee)
+    put :update, id: @testimony, testimony: { content: @testimony.content, user_id: users(:jay).id }
+    assert_redirected_to testimony_path(assigns(:testimony))
+    assert_equal assigns(:testimony).user_id, users(:aimee).id
+  end
+
+  test "should not update testimony if nothing has changed" do
+    sign_in users(:aimee)
+    put :update, id: @testimony
+    assert_redirected_to testimony_path(assigns(:testimony))
+    assert_equal assigns(:testimony).user_id, users(:aimee).id
   end
 
   test "should destroy testimony" do

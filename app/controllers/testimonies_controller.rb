@@ -41,15 +41,15 @@ class TestimoniesController < ApplicationController
   # POST /testimonies
   # POST /testimonies.json
   def create
-    @testimony = Testimony.new(params[:testimony])
+    @testimony = current_user.testimonies.new(params[:testimony])
 
     respond_to do |format|
       if @testimony.save
         format.html { redirect_to @testimony, notice: 'Testimony was successfully created.' }
-        format.json { render json: @testimony, status: :created, location: @testimony }
+        format.json { render json: @testimony, testimony: :created, location: @testimony }
       else
         format.html { render action: "new" }
-        format.json { render json: @testimony.errors, status: :unprocessable_entity }
+        format.json { render json: @testimony.errors, testimony: :unprocessable_entity }
       end
     end
   end
@@ -57,8 +57,10 @@ class TestimoniesController < ApplicationController
   # PUT /testimonies/1
   # PUT /testimonies/1.json
   def update
-    @testimony = Testimony.find(params[:id])
-
+    @testimony = current_user.testimonies.find(params[:id])
+    if params[:testimony] && params[:testimony].has_key?(:user_id)
+      params[:testimony].delete(:user_id) 
+    end
     respond_to do |format|
       if @testimony.update_attributes(params[:testimony])
         format.html { redirect_to @testimony, notice: 'Testimony was successfully updated.' }
