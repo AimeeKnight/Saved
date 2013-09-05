@@ -6,7 +6,9 @@
 <div class="testimony">
   <div class="row">
     <div class="span1">
-      <%= image_tag testimony.user.gravatar_url %>
+
+<!-- all models have to_param method that's called when passing the model into a URL helper like 'link_to'. ProfilesController show action is expecting 'name' rather than 'ID' to find the specified user though. Fixed by defining to_param method to return profile_name in users.rb
+ -->      <%= link_to image_tag(testimony.user.gravatar_url), profile_path(testimony.user) %>
     </div>
     <div class="span7">
       <strong><%= testimony.user.full_name %></strong>

@@ -1,6 +1,7 @@
 <div class="page-header">
 	<h1><%= @user.full_name %></h1>
-	<img src="www.gravatar.com/">
+	<%= image_tag @user.gravatar_url %>
+	<%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: 'btn' %>
 </div>
 
 <% if @testimonies %>
