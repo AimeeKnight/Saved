@@ -3,6 +3,7 @@ aimee:
   last_name: "Knight"
   email: "aimeeknight83@gmail.com"
   profile_name: "aimeeknight"
+  encrypted_password: $2a$10$Fh/Hm8RxDsuPTeBUr6864.GARlcmt7zF2WspaXGr3BIv2C27N.osq
 
 jay: 
   first_name: "Jay"

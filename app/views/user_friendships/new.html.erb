@@ -7,7 +7,7 @@
 	 	<div class="form form-actions">
 
 	 		<!-- hidden field keeps track of friend_id when going from this form to the create action -->
-	 		<%= form.hidden_field :firend_id, value: @friend %>
+	 		<%= form.hidden_field :friend_id, value: @friend.profile_name %>
 	 		<%= submit_tag "Yes, Add Friend", class: 'btn btn-primary' %>
 	 		<%= link_to "Cancel", profile_path(@friend), class: 'btn' %>
 	 	</div>
