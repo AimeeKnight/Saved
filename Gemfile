@@ -19,6 +19,7 @@ end
 
 gem 'devise'
 gem 'simple_form'
+gem 'state_machine'
 
 # Gems used only for assets and not required
 # in production environments by default.
