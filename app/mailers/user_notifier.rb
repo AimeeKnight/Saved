@@ -1,6 +1,7 @@
 class UserNotifier < ActionMailer::Base
   default from: "from@example.com"
 
+  #instance vars in methods passed to views of same name
   def friend_requested(user_friendship_id)
   	user_friendship = UserFriendship.find(user_friendship_id)
   	

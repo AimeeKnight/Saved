@@ -1,6 +1,52 @@
 require 'test_helper'
 
 class UserFriendshipsControllerTest < ActionController::TestCase
+	context "#index" do
+		context "when not logged in" do
+			should "redirect to the login page" do
+				get :index
+				assert_response :redirect
+			end
+		end
+	end
+
+	context "#index" do
+		context "when logged in" do
+			setup do
+				@friendship1 = create(:pending_user_friendship, user: users(:aimee), friend: create(:user, first_name: 'Pending', last_name: 'Friend'))
+        @friendship2 = create(:accepted_user_friendship, user: users(:aimee), friend: create(:user, first_name: 'Active', last_name: 'Friend'))
+
+				sign_in users(:aimee)
+				get :index
+			end
+
+			should "get the index page without error" do
+				assert_response :success
+			end
+
+			should "assign user_friendships" do
+				assert assigns(:user_friendships)
+			end
+
+      should "display friend's names" do
+        assert_match /Pending/, response.body
+        assert_match /Active/, response.body
+      end
+
+      should "display pending information on a pending friendship" do
+      	assert_select "#user_friendship_#{@friendship1.id}" do
+      		assert_select "em", "Friendship is pending."
+      	end
+      end
+
+      should "display date information on an accepted friendship" do
+        assert_select "#user_friendship_#{@friendship2.id}" do
+          assert_select "em", "Friendship started #{@friendship2.updated_at}."
+        end
+      end
+		end
+	end
+
 	context "#new" do
 		context "when not logged in" do
 			should "redirect to the login page" do
@@ -96,7 +142,7 @@ class UserFriendshipsControllerTest < ActionController::TestCase
 				end
 
 				should "create a friendship" do
-					assert users(:aimee).friends.include?(users(:jamie))
+					assert users(:aimee).pending_friends.include?(users(:jamie))
 				end
 
 				should "redirect to the profile page of the friend" do

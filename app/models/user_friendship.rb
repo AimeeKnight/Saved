@@ -8,8 +8,8 @@ class UserFriendship < ActiveRecord::Base
 		after_transition on: :accept, do: :send_acceptance_email
 
 		state :requested
-		#on the accept event transition from any state to the accepted state
-		#automatically creates accept method with !, and sets state to accept
+		#on the 'accept!' event transition from any state to the 'accepted' state
+		#automatically creates 'accept!' method and sets state to 'accepted'
 		event :accept do
 			transition any => :accepted
 		end
