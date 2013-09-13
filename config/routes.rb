@@ -15,7 +15,11 @@ Saved::Application.routes.draw do
     get "/logout" => 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  resources :user_friendships
+  resources :user_friendships do
+    member do
+      put :accept
+    end
+  end
 
   resources :testimonies
   get 'feed', to: 'testimonies#index', as: :feed
