@@ -15,6 +15,7 @@ class UserFriendship < ActiveRecord::Base
 		end
 	end
 
+	#creates 2 UserFriendship objects
 	def self.request(user1, user2)
 		transaction do
 			friendship1 = create!(user: user1, friend: user2, state: 'pending')
