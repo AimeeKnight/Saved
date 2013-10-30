@@ -4,6 +4,8 @@ class UserFriendship < ActiveRecord::Base
 
 	attr_accessible :user, :friend, :user_id, :friend_id, :state
 
+	after_destroy :delete_mutual_friendship
+
 	state_machine :state, initial: :pending do
 		after_transition on: :accept, do: [:send_acceptance_email, :accept_mutual_friendship!]
 
@@ -36,7 +38,7 @@ class UserFriendship < ActiveRecord::Base
 		UserNotifier.friend_request_accepted(id).deliver
 	end
 
-		#find the inverse of the initially created user_friendship instance
+		#find the inverse (mirror friendship object) of the initially created user_friendship instance
 	def mutual_friendship
 		self.class.where({user_id: friend_id, friend_id: user_id}).first		
 	end
@@ -44,5 +46,10 @@ class UserFriendship < ActiveRecord::Base
 	#get mutual friendship and update the state without using state machine so won't invoke callbacks
 	def accept_mutual_friendship!
 		mutual_friendship.update_attribute(:state, 'accepted')
+	end
+
+	#delete the inverse friendship object
+	def delete_mutual_friendship
+		mutual_friendship.delete
 	end
 end
