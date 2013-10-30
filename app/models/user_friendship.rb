@@ -36,7 +36,7 @@ class UserFriendship < ActiveRecord::Base
 		UserNotifier.friend_request_accepted(id).deliver
 	end
 
-		#find the instance that sent the friend request AKA the friend of the user who accepted the request
+		#find the inverse of the initially created user_friendship instance
 	def mutual_friendship
 		self.class.where({user_id: friend_id, friend_id: user_id}).first		
 	end
