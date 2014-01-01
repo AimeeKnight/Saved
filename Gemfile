@@ -22,6 +22,7 @@ end
 gem 'devise'
 gem 'simple_form'
 gem 'state_machine'
+gem 'draper'
 
 # Gems used only for assets and not required
 # in production environments by default.
